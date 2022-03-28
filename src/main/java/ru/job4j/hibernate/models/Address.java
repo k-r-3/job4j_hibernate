@@ -6,27 +6,26 @@ import java.util.Objects;
 @Entity
 @Table(name = "addresses")
 public class Address {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String street;
 
     private String number;
 
-    public static Address of (String street, String number) {
+    public static Address of(String street, String number) {
         Address address = new Address();
         address.street = street;
         address.number = number;
         return address;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -51,7 +50,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(id, address.id);
+        return id == address.id;
     }
 
     @Override

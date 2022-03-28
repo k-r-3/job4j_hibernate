@@ -6,28 +6,29 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "persons")
-public class Person {
+@Table(name = "authors")
+public class Author {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Address> addresses = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Book> books = new HashSet<>();
 
-    public static Person of(String name) {
-        Person person = new Person();
-        person.name = name;
-        return person;
+    public static Author of(String name) {
+        Author author = new Author();
+        author.name = name;
+        return author;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,25 +40,24 @@ public class Person {
         this.name = name;
     }
 
-    public Set<Address> getAddresses() {
-        return addresses;
+    public Set<Book> getBooks() {
+        return books;
     }
 
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return id == person.id;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }
