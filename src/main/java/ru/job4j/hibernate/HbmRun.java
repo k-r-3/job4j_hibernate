@@ -5,10 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ru.job4j.hibernate.models.Brand;
-import ru.job4j.hibernate.models.CarType;
-import ru.job4j.hibernate.models.Role;
-import ru.job4j.hibernate.models.User;
+import ru.job4j.hibernate.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +19,23 @@ public class HbmRun {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             Session session = sf.openSession();
             session.beginTransaction();
-            Brand brand = Brand.of("Chevrolet");
-            List<CarType> types = new ArrayList<>();
-            types.add(CarType.of("Lacetti"));
-            types.add(CarType.of("Aveo"));
-            types.add(CarType.of("Tahoe"));
-            types.add(CarType.of("Camaro"));
-            types.add(CarType.of("Niva"));
-            for (int i = 0; i < types.size(); i++) {
-                session.save(types.get(i));
-                brand.addType(session.load(CarType.class, i + 1));
-            }
-            session.save(brand);
+
+            Address one = Address.of("Kazanskaya", "1");
+            Address two = Address.of("Piterskaya", "10");
+
+            Person first = Person.of("Nikolay");
+            first.getAddresses().add(one);
+            first.getAddresses().add(two);
+
+            Person second = Person.of("Anatoliy");
+            second.getAddresses().add(two);
+
+            session.save(first);
+            session.save(second);
+
+            Person person = session.get(Person.class, 1L);
+            session.remove(person);
+
             session.getTransaction().commit();
             session.close();
         }  catch (Exception e) {
