@@ -19,6 +19,7 @@ public class HbmRun {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             Session session = sf.openSession();
             session.beginTransaction();
+            session.createSQLQuery("alter books_id_seq restart with 1");
 
             Book book1 = Book.of("Java: эффективное программирование");
             Book book2 = Book.of("Java.Библиотека профессионала");
