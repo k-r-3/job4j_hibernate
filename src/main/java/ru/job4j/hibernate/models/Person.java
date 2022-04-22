@@ -18,7 +18,7 @@ public class Person {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
 
-    public static Person of (String name) {
+    public static Person of(String name) {
         Person person = new Person();
         person.name = name;
         return person;
@@ -50,8 +50,12 @@ public class Person {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Person person = (Person) o;
         return Objects.equals(id, person.id);
     }

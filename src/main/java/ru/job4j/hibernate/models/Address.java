@@ -15,7 +15,7 @@ public class Address {
 
     private String number;
 
-    public static Address of (String street, String number) {
+    public static Address of(String street, String number) {
         Address address = new Address();
         address.street = street;
         address.number = number;
@@ -48,8 +48,12 @@ public class Address {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Address address = (Address) o;
         return Objects.equals(id, address.id);
     }
