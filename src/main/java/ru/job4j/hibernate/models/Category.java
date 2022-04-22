@@ -1,27 +1,25 @@
 package ru.job4j.hibernate.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "j_car_type")
-public class CarType {
-
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
+    @OneToMany(mappedBy = "category")
+    private List<Task> tasks = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
-
-    public static CarType of(String name, Brand brand) {
-        CarType type = new CarType();
-        type.name = name;
-        type.brand = brand;
-        return type;
+    public static Category of(String name) {
+        Category category = new Category();
+        category.name = name;
+        return category;
     }
 
     public int getId() {
@@ -40,6 +38,14 @@ public class CarType {
         this.name = name;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -48,8 +54,8 @@ public class CarType {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CarType carType = (CarType) o;
-        return id == carType.id;
+        Category category = (Category) o;
+        return id == category.id;
     }
 
     @Override
@@ -59,9 +65,9 @@ public class CarType {
 
     @Override
     public String toString() {
-        return "CarType{" + "id=" + id
-                + ", name='" + name
-                + '\'' + ", brand="
-                + brand + '}';
+        return "Category{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
     }
 }

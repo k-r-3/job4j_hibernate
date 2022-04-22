@@ -15,7 +15,7 @@ public class Brand {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "brand")
     private List<CarType> types = new ArrayList<>();
 
     public static Brand of(String name) {
@@ -40,6 +40,10 @@ public class Brand {
         this.types = types;
     }
 
+    public List<CarType> getTypes() {
+        return types;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -55,5 +59,14 @@ public class Brand {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Brand{"
+                 + "id=" + id
+                 + ", name='" + name
+                 + '\''
+                 + '}';
     }
 }
